@@ -11,7 +11,7 @@
     //retorna tanto las barras como la pelota que estan dentro del tablero.
     self.Board.prototype = {
         get elements(){                     
-            var elements = this.bars;
+            var elements = this.bars.map(function(){return bar;});
            elements.push(this.ball);
             return elements;
         }
@@ -26,10 +26,19 @@
         this.speed_y = 0;
         this.speed_x = 3;
         this.board = board;
+        this.direction = 1;
 
         board.ball = this;
-        this.kind = "circle";
+        this.kind = "circle";        
     }
+
+    self.Ball.prototype = {
+        move: function(){
+            this.x += (this.speed_x * this.direction);
+            this.y += (this.speed_y);
+        }
+    }
+
 })();
 
 //funcion anonima que nos crea las barras para el juego.
@@ -82,10 +91,10 @@
         play: function(){
             this.clean();
             this.draw();
+            this.board.ball.move();
         }
 
     }
-
     
 
     //funcion encargada de dibujar los elementos.
