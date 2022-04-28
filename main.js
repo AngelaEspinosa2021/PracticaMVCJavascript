@@ -54,6 +54,9 @@
     }
 
     self.BoardView.prototype = {
+        clean: function(){
+            this.ctx.clearRect(0,0,this.board.width, this.board.height);
+        },
         draw: function(){
             for (var i = this.board.elements.length -1; i >= 0; i--){
                 var el = this.board.elements[i];
@@ -103,6 +106,7 @@ document.addEventListener("keydown", function(ev){
 window.requestAnimationFrame(controller);
 
 function controller(){
+    board_view.clean();
     board_view.draw();
     window.requestAnimationFrame(controller);
 }
