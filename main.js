@@ -1,3 +1,4 @@
+//función anonima que se ejecuta a si misma.
 (function(){
     self.Board = function(width,height){
         this.width = width;
@@ -7,15 +8,36 @@
         this.bars = [];
         this.ball = null;
     }
-
+    //retorna tanto las barras como la pelota que estan dentro del tablero.
     self.Board.prototype = {
-        get elements(){                     //retorna tanto las barras como la pelota que estan dentro del tablero.
+        get elements(){                     
             var elements = this.bars;
             elements.push(ball);
             return elements;
         }
     }
-})(); //función anonima que se ejecuta a si misma.
+})(); 
+//funcion anonima que nos crea las barras para el juego.
+(function(){
+    self.Bar = function(x,y,width,height,board){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.board = board;
+        this.board.push(this);
+        this.kind = "rectangle";
+    }
+    //funciones que le dan movimiento.
+    self.Board.prototype = {
+        down: function() {
+
+        },
+        up: function(){
+
+        }
+    }
+})();
 
 //funcion anonima que declara una nueva clase que dibuja los elementos en la vista
 (function(){
@@ -27,12 +49,11 @@
         this.ctx = canvas.getContext("2d");
     }
 })();
-
-window.addEventListener("load",main); //para ejecutar el main cuando se cargue la ventana.
+//para ejecutar el main cuando se cargue la ventana.
+window.addEventListener("load",main); 
 
 function main(){
     var board = new Board(800,400);
-    console.log(board);
     var canvas = document.getElementById('canvas');
     var board_view = new BoardView(canvas,board);
 }
