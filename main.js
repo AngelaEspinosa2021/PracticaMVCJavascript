@@ -12,7 +12,7 @@
     self.Board.prototype = {
         get elements(){                     
             var elements = this.bars;
-            elements.push(this.ball);
+           // elements.push(this.ball);
             return elements;
         }
     }
@@ -66,13 +66,11 @@
 
     //funcion encargada de dibujar los elementos.
     function draw(ctx, element){
-        if(element != null && element.hasOwnProperty("kind")){
-            switch(element.kind){
-                case "rectangle":
-                    ctx.fillRect(element.x, element.y,element.width, element.height);
-                    break;
-            }
-        }        
+        switch(element.kind){
+            case "rectangle":
+                ctx.fillRect(element.x, element.y,element.width, element.height);
+                break;
+        }           
     }
 })();
 
@@ -82,14 +80,16 @@ var bar_2 = new Bar(735,100,40,100, board);
 var canvas = document.getElementById('canvas');
 var board_view = new BoardView(canvas,board);
 
+
 document.addEventListener("keydown", function(ev){
-    if(ev.KeyCode == 38){
+    ev.preventDefault();
+    if(ev.keyCode == 38){
         bar.up();
     }
     else if(ev.keyCode == 40){
         bar.down();
     }
-    else if(ev.KeyCode === 87){
+    else if(ev.keyCode === 87){
         bar_2.up(); //w
     }
     else if(ev.keyCode === 83){
@@ -100,11 +100,12 @@ document.addEventListener("keydown", function(ev){
     console.log(""+bar_2); //de esta manera convertimos bar a una cadena de texto.
 });
 
+window.requestAnimationFrame(controller);
 
+function controller(){
+    board_view.draw();
+    window.requestAnimationFrame(controller);
+}
 
 //para ejecutar el main cuando se cargue la ventana.
-self.addEventListener("load",main); 
-
-function main(){
-   board_view.draw();
-}
+//self.addEventListener("load",main); 
